@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF to Word Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .file-info {
+            margin: 15px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f4fc;
+            border-radius: 4px;
+            display: {% if show_output %}block{% else %}none{% endif %};
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PDF to Word Converter</h1>
+        
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateFile()">
+            <input type="file" id="pdfFile" name="pdf_file" accept=".pdf" required>
+            <button type="submit" class="btn">Convert</button>
+        </form>
+        
+        <div id="fileInfo" class="file-info" style="display: none;">
+            <strong>Selected File:</strong> <span id="fileName"></span>
+        </div>
+        
+        {% if show_output %}
+        <div class="output">
+            <h3>Conversion Complete!</h3>
+            <p><strong>Output File:</strong> {{ output_filename }}</p>
+            <p>File will download automatically...</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('pdfFile').addEventListener('change', function(e) {
+            const fileInfo = document.getElementById('fileInfo');
+            const fileName = document.getElementById('fileName');
+            
+            if (this.files.length > 0) {
+                fileName.textContent = this.files[0].name;
+                fileInfo.style.display = 'block';
+            } else {
+                fileInfo.style.display = 'none';
+            }
+        });
+
+        function validateFile() {
+            const fileInput = document.getElementById('pdfFile');
+            if (!fileInput.value.toLowerCase().endsWith('.pdf')) {
+                alert('Please select a PDF file');
+                return false;
+            }
+            return true;
+        }
+        
+        {% if show_output %}
+        // Auto-download after showing the message
+        setTimeout(function() {
+            window.location.href = "{{ download_url }}";
+        }, 1000);
+        {% endif %}
+    </script>
+</body>
+</html>
