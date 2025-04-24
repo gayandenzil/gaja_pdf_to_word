@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+# simple PDF Converter/
+
+>>>>>>> origin/main
 from pdf2docx import Converter
 from docx import Document
 
@@ -17,6 +22,7 @@ def convert_pdf_to_word(pdf_file, word_file):
         print(f"❌ Error: {e}")
 
 
+<<<<<<< HEAD
 # def set_default_font(docx_file, font_name='Aptos (Body)'):
 #     doc = Document(docx_file)
 #     for paragraph in doc.paragraphs:
@@ -29,6 +35,8 @@ def convert_pdf_to_word(pdf_file, word_file):
 # set_default_font('output.docx', font_name='Arial')
 
 
+=======
+>>>>>>> origin/main
 pdf_path = input("Enter the full path to the PDF file: ").strip('"')
 word_path = input("Enter the full path for the output Word file (e.g., output.docx): ").strip('"')
 convert_pdf_to_word(pdf_path, word_path)
